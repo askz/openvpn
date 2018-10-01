@@ -25,14 +25,9 @@ rescue NameError
 end
 
 if node['openvpn']['use_databag']
-  if Chef::Config[:solo] && !chef_solo_search_installed?
-    Chef::Log.warn('This recipe uses search. Chef-Solo does not support search unless '\
-      'you install the chef-solo-search cookbook.')
-  else
-    search(node['openvpn']['user_databag'], node['openvpn']['user_query']) do |u|
-      openvpn_user u['id'] do
-        create_bundle true
-      end
+  search(node['openvpn']['user_databag'], node['openvpn']['user_query']) do |u|
+    openvpn_user u['id'] do
+      create_bundle true
     end
   end
 else
